@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
      # Your apps
-    'accounts',
+    'users',
     'tasks',
 ]
 
