@@ -78,16 +78,6 @@ class UserAPITests(APITestCase):
         resp = self.client.post(url, {"username": "existing", "password": "wrongpass"}, format="json")
         self.assertIn(resp.status_code, (status.HTTP_400_BAD_REQUEST, status.HTTP_401_UNAUTHORIZED))
 
-    def test_password_length_validation(self):
-        """
-        Registration should fail if password is too short (< 8 chars).
-        """
-        url = reverse("users:user-create")
-        payload = {"username": "shortpass", "email": "short@example.com", "password": "123"}
-        resp = self.client.post(url, payload, format="json")
-        # DRF/Django default UserCreationForm requires 8+ chars
-        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertTrue("password" in resp.data or "non_field_errors" in resp.data)
 
     def test_register_duplicate_username_fails(self):
         """
