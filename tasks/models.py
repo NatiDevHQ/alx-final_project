@@ -5,9 +5,10 @@ from django.db import models
 UserModel = get_user_model()
 
 class Task(models.Model):
+
     user = models.ForeignKey(
         UserModel, 
-        related_name='tasks',  # Changed from 'users' to 'tasks' for better semantics
+        related_name='users', 
         on_delete=models.CASCADE, 
         verbose_name=_('User')
     )
@@ -19,9 +20,9 @@ class Task(models.Model):
     completed = models.BooleanField(_('Completed'), default=False)
 
     class Meta:
-        ordering = ('-created_at', )  # Order by newest first
+        ordering = ('title', )
         verbose_name = 'task'
         verbose_name_plural = 'tasks'
    
     def __str__(self):
-        return f"{self.title} - {self.user.username}"
+        return str(self.title)
