@@ -1,28 +1,24 @@
-
 from django.urls import path, include
 from rest_framework import routers
 from tasks import views
 
 app_name = 'tasks'
 
-# Create a router and register our viewsets with it.
 router = routers.DefaultRouter()
-router.register('', views.TaskView, 'tasks')
+# Keep base at /tasks/
+router.register('', views.TaskView, basename='tasks')
 
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
+    path('', include(router.urls)),
 
-
-    path('tasks/', include(router.urls)),
-
+    # Optional helper endpoints (redundant with filtered list, but OK)
     path('me/all/', views.my_tasks, name='my-tasks'),
     path('me/<int:pk>/', views.task_detail, name='task-detail'),
 
-    path('me/completed/', views.tasks_completed, name='compleated'),
-    path('me/incompleted/', views.tasks_incompleted, name='incompleated'),
+    path('me/completed/', views.tasks_completed, name='completed'),
+    path('me/incompleted/', views.tasks_incompleted, name='incomplete'),
 
-    # Export data.
+    # Export (now protected)
     path('export/csv/', views.save_as_csv, name='save-as-csv'),
-    path('export/xls/', views.save_as_xls, name='save-as-xls')
-
+    path('export/xls/', views.save_as_xls, name='save-as-xls'),
 ]

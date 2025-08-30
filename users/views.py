@@ -12,4 +12,5 @@ class UserCreateView(generics.CreateAPIView):
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all().order_by("id")
     serializer_class = UserListSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # Safer: restrict to admins only
+    permission_classes = [permissions.IsAdminUser]

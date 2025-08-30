@@ -9,14 +9,12 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = CustomUser
 
-    list_display = ["id", "username", "email", "name", "is_staff", "is_active"]
-    search_fields = ["username", "email", "name"]
+    list_display = ("id", "username", "email", "name", "is_staff", "is_active")
+    search_fields = ("username", "email", "name")
 
-    # show `name` on edit page
     fieldsets = UserAdmin.fieldsets + (
         (None, {"fields": ("name",)}),
     )
-    # show `name` on add page
     add_fieldsets = UserAdmin.add_fieldsets + (
         (None, {"fields": ("name",)}),
     )

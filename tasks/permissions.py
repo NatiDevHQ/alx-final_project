@@ -1,8 +1,8 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission
 
-class IsOwner(permissions.BasePermission):
+class IsOwner(BasePermission):
     """
-        Custom permission to only allow owners of profile to view or edit it.
+    Only allow owners to view/edit their tasks.
     """
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
+        return getattr(obj, 'user_id', None) == getattr(request.user, 'id', None)
