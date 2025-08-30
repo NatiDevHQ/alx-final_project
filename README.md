@@ -1,157 +1,110 @@
-
-```markdown
-# Task & User Management App Alx Final Project
+# Task & User Management App – ALX Final Project
 
 ## Overview
-
-This project includes backend functionality for **User management** and lays the foundation for a **Tasks app**. The User app is fully implemented and tested. The frontend is under development and will be pushed soon.
-
-### Status (as of 27/Aug/2025)
-- **User app backend:** ✅ Completed and tested
-- **Tasks app backend:** ⚠️ In progress
-- **Frontend:** In progress (not yet pushed to Git)
+This project is a **Django REST Framework (DRF)** based application for **User Management** and **Task Management**.  
+It includes a **custom user model**, authentication system, and a **tasks API** that allows authenticated users to create, update, and manage tasks.  
+Frontend development will connect to these APIs and is under active development.
 
 ---
 
-## User App Features
+## 📌 Project Status (as of 29/Aug/2025)
+- **User App Backend:** ✅ Fully completed and tested  
+- **Tasks App Backend:** ✅ Completed with CRUD functionality & tested  
+- **Frontend:** ⚠️ Under development (to be pushed soon)  
+
+---
+
+## 🧑‍💻 User App Features
 
 ### 1. Custom User Model
-- `CustomUser` extends `AbstractUser`
+- Extends `AbstractUser`
 - Added `name` field
-- Unique email enforced
-- Admin interface customized to include `name`
+- Unique **email-based authentication**
+- Admin interface customized to show `name`
 
 ### 2. Serializers
-- `UserCreateSerializer` for registration with password hashing
-- `UserSerializer` for listing users
-- Token created automatically upon registration
+- `UserCreateSerializer` → Handles registration with password hashing  
+- `UserSerializer` → For listing and returning user data  
+- Token created automatically upon registration  
 
 ### 3. Views
-- `UserCreateView`: Allows user registration (`POST /api/users/register/`)
-- `UserListView`: Returns list of users (`GET /api/users/`) – **authentication required**
-- `CustomAuthToken`: Returns token **and** user data on login (`POST /api/users/login/`)
+- **Register:** `POST /api/users/register/` → Creates a new user  
+- **Login:** `POST /api/users/login/` → Returns **token + user data**  
+- **User List:** `GET /api/users/` → Returns all users (**authentication required**)  
 
 ### 4. URLs
-```
-
-/api/users/           -> List users (auth required)
-/api/users/register/  -> Register new user
-/api/users/login/     -> Login and get token + user data
-
-````
-
-### 5. Admin
-- `CustomUserAdmin` registered
-- Fields displayed: `id`, `username`, `email`, `name`, `is_staff`, `is_active`
-- Forms customized for `add` and `change` with `name` included
-
-### 6. Tests
-- `tests.py` covers:
-  - User registration (normal & edge cases)
-  - Login
-  - Missing fields
-  - Duplicate username
-  - Password length validation
-- Tests run successfully:
-```bash
-python manage.py test users
-````
-
----
-
-## Notes
-
-* **Frontend:** React + Vite + Tailwind frontend is in progress with `AuthContext`, `Login`, `Register`, and `UserList` components. It is **not pushed yet**, but will be pushed tomorrow if possible.
-* **Next steps:** Complete backend for the **Tasks app**, then integrate the frontend.
-
----
-
-## How to Run Backend
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/NatiDevHQ/alx-final_project.git<repo-url>
-cd alx-final_project
-
-```
-
-2. Set up virtual environment and install dependencies:
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-3. Apply migrations:
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-4. Run the development server:
-
-```bash
-python manage.py runserver
-```
-
-5. Run tests (optional):
-
-```bash
-python manage.py test users
-```
-
----
-
-## API Usage
-
-### Register
-
 ```http
-POST /api/users/register/
-Content-Type: application/json
+POST   /api/users/register/   → Register new user
+POST   /api/users/login/      → Login and get token + user data
+GET    /api/users/            → List all users (requires authentication)
+✅ Tasks App Features
+1. Task Model
+title (string)
 
-{
-  "username": "testuser",
-  "email": "test@example.com",
-  "password": "StrongPass123"
-}
-```
+description (text)
 
-### Login
+completed (boolean)
 
-```http
-POST /api/users/login/
-Content-Type: application/json
+owner (ForeignKey to User – ensures ownership)
 
-{
-  "username": "testuser",
-  "password": "StrongPass123"
-}
-```
+2. Serializers
+TaskSerializer → Full CRUD serialization with ownership
 
-**Response:**
+3. Views
+Implemented via ViewSets
 
-```json
-{
-  "token": "<auth_token>",
-  "user": {
-    "id": 1,
-    "username": "testuser",
-    "email": "test@example.com",
-    "name": "Test User"
-  }
-}
-```
+Permissions: Only the owner of a task can modify/delete it
 
-### List Users (requires token)
+4. URLs
+http
+Copy code
+GET    /api/tasks/          → List all tasks (authenticated user only)
+POST   /api/tasks/          → Create new task
+GET    /api/tasks/{id}/     → Retrieve single task
+PUT    /api/tasks/{id}/     → Update task
+PATCH  /api/tasks/{id}/     → Partial update
+DELETE /api/tasks/{id}/     → Delete task
+🔑 Authentication
+Uses DRF Token Authentication
 
-```http
-GET /api/users/
-Authorization: Token <auth_token>
-```
+Token is returned during login and must be included in headers:
 
----
+http
+Copy code
+Authorization: Token your_token_here
+🧪 Testing
+Automated tests written with APITestCase
 
+Coverage:
+
+✅ User registration, login, and listing
+
+✅ Password validation
+
+✅ Task creation, listing, updating, and deletion
+
+✅ Ownership restrictions enforced
+
+Run tests:
+
+bash
+Copy code
+python manage.py test
+🚀 Frontend (Coming Soon)
+The frontend will be built with React + TailwindCSS, connecting to the APIs above.
+Features planned:
+
+User authentication (register/login/logout)
+
+Task dashboard with CRUD actions
+
+Friendly & responsive UI
+
+📂 Tech Stack
+Backend: Django, Django REST Framework
+
+Database: SQLite (development), PostgreSQL (production ready)
+
+Auth: DRF Token Authentication
+
+Frontend: React + TailwindCSS (in progress)
