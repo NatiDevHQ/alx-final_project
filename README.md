@@ -1,110 +1,107 @@
-# Task & User Management App – ALX Final Project
 
-## Overview
-This project is a **Django REST Framework (DRF)** based application for **User Management** and **Task Management**.  
-It includes a **custom user model**, authentication system, and a **tasks API** that allows authenticated users to create, update, and manage tasks.  
-Frontend development will connect to these APIs and is under active development.
+````markdown
+# ✨ Task & User Management App – ALX Final Project
+
+## 📖 Overview
+This project is a **Django REST Framework (DRF)** powered application that provides:  
+- 🔐 **User Management** with a custom user model & token authentication  
+- ✅ **Task Management** with full CRUD operations, tied to authenticated users  
+
+A **React + TailwindCSS frontend** will connect to these APIs (currently under development).  
 
 ---
 
 ## 📌 Project Status (as of 29/Aug/2025)
-- **User App Backend:** ✅ Fully completed and tested  
-- **Tasks App Backend:** ✅ Completed with CRUD functionality & tested  
-- **Frontend:** ⚠️ Under development (to be pushed soon)  
+- 🟢 **User App Backend:** Fully completed & tested  
+- 🟢 **Tasks App Backend:** Completed with CRUD functionality & tested  
+- 🟡 **Frontend:** Under development (will be pushed soon)  
 
 ---
 
-## 🧑‍💻 User App Features
+## 👤 User App Features
 
-### 1. Custom User Model
+### 🔹 Custom User Model
 - Extends `AbstractUser`
-- Added `name` field
 - Unique **email-based authentication**
-- Admin interface customized to show `name`
+- Added `name` field
+- Admin panel customized to display user details  
 
-### 2. Serializers
-- `UserCreateSerializer` → Handles registration with password hashing  
-- `UserSerializer` → For listing and returning user data  
-- Token created automatically upon registration  
+### 🔹 API Endpoints
+| Method | Endpoint                  | Description                      | Auth Required |
+|--------|---------------------------|----------------------------------|---------------|
+| POST   | `/api/users/register/`    | Register a new user              | ❌ |
+| POST   | `/api/users/login/`       | Login & get **token + user data**| ❌ |
+| GET    | `/api/users/`             | List all users                   | ✅ |
 
-### 3. Views
-- **Register:** `POST /api/users/register/` → Creates a new user  
-- **Login:** `POST /api/users/login/` → Returns **token + user data**  
-- **User List:** `GET /api/users/` → Returns all users (**authentication required**)  
+---
 
-### 4. URLs
+## 📋 Tasks App Features
+
+### 🔹 Task Model
+- `title` (string)  
+- `description` (text)  
+- `completed` (boolean)  
+- `owner` (ForeignKey → User)  
+
+### 🔹 API Endpoints
+| Method | Endpoint             | Description                     | Auth Required |
+|--------|----------------------|---------------------------------|---------------|
+| GET    | `/api/tasks/`        | List all tasks (user-specific)  | ✅ |
+| POST   | `/api/tasks/`        | Create a new task               | ✅ |
+| GET    | `/api/tasks/{id}/`   | Retrieve a single task          | ✅ |
+| PUT    | `/api/tasks/{id}/`   | Update a task (replace)         | ✅ |
+| PATCH  | `/api/tasks/{id}/`   | Update a task (partial)         | ✅ |
+| DELETE | `/api/tasks/{id}/`   | Delete a task                   | ✅ |
+
+🔒 **Ownership rules enforced** → Only task owners can update/delete their tasks.  
+
+---
+
+## 🔑 Authentication
+Uses **DRF Token Authentication**.  
+After login, include the token in headers for all requests:  
+
 ```http
-POST   /api/users/register/   → Register new user
-POST   /api/users/login/      → Login and get token + user data
-GET    /api/users/            → List all users (requires authentication)
-✅ Tasks App Features
-1. Task Model
-title (string)
-
-description (text)
-
-completed (boolean)
-
-owner (ForeignKey to User – ensures ownership)
-
-2. Serializers
-TaskSerializer → Full CRUD serialization with ownership
-
-3. Views
-Implemented via ViewSets
-
-Permissions: Only the owner of a task can modify/delete it
-
-4. URLs
-http
-Copy code
-GET    /api/tasks/          → List all tasks (authenticated user only)
-POST   /api/tasks/          → Create new task
-GET    /api/tasks/{id}/     → Retrieve single task
-PUT    /api/tasks/{id}/     → Update task
-PATCH  /api/tasks/{id}/     → Partial update
-DELETE /api/tasks/{id}/     → Delete task
-🔑 Authentication
-Uses DRF Token Authentication
-
-Token is returned during login and must be included in headers:
-
-http
-Copy code
 Authorization: Token your_token_here
-🧪 Testing
-Automated tests written with APITestCase
+````
 
-Coverage:
+---
 
-✅ User registration, login, and listing
+## 🧪 Testing
 
-✅ Password validation
+Automated tests are written using `APITestCase`.
 
-✅ Task creation, listing, updating, and deletion
+### ✅ Coverage
 
-✅ Ownership restrictions enforced
+* User registration, login & listing
+* Password validation
+* Task CRUD operations
+* Ownership restrictions
 
-Run tests:
+### ▶ Run Tests
 
-bash
-Copy code
+```bash
 python manage.py test
-🚀 Frontend (Coming Soon)
-The frontend will be built with React + TailwindCSS, connecting to the APIs above.
-Features planned:
+```
 
-User authentication (register/login/logout)
+---
 
-Task dashboard with CRUD actions
+## 🚀 Frontend (Coming Soon)
 
-Friendly & responsive UI
+The frontend will be built with **React + TailwindCSS** and will include:
 
-📂 Tech Stack
-Backend: Django, Django REST Framework
+* 🔐 User authentication (register/login/logout)
+* 📝 Task dashboard with CRUD functionality
+* 📱 Modern & responsive UI
 
-Database: SQLite (development), PostgreSQL (production ready)
+---
 
-Auth: DRF Token Authentication
+## 🛠️ Tech Stack
 
-Frontend: React + TailwindCSS (in progress)
+* **Backend:** Django, Django REST Framework
+* **Database:** SQLite (development), PostgreSQL (production ready)
+* **Auth:** DRF Token Authentication
+* **Frontend:** React + TailwindCSS (in progress)
+
+```
+
