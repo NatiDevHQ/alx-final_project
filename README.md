@@ -1,4 +1,4 @@
-todo add test api Endpoints 
+todo add test api Endpoint
 
 ````markdown
 # ✨ Task & User Management App – ALX Final Project
