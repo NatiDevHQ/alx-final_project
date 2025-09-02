@@ -1,6 +1,3 @@
-todo add test api Endpoint
-
-````markdown
 # ✨ Task & User Management App – ALX Final Project
 
 ## 📖 Overview
@@ -64,27 +61,97 @@ After login, include the token in headers for all requests:
 
 ```http
 Authorization: Token your_token_here
-````
+```
 
 ---
 
-## 🧪 Testing
+## 🧪 API Testing with Postman
 
-Automated tests are written using `APITestCase`.
+You can copy-paste these request payloads directly into Postman to test the endpoints.
 
-### ✅ Coverage
+### 👤 User API
 
-* User registration, login & listing
-* Password validation
-* Task CRUD operations
-* Ownership restrictions
+#### 1. Register
+```http
+POST /api/users/register/
 
-### ▶ Run Tests
-
-```bash
-python manage.py test
+{
+  "email": "john@example.com",
+  "username": "John",
+  "password": "TestPass123"
+}
 ```
 
+#### 2. Login
+```http
+POST /api/users/login/
+
+{
+  "username": "john",
+  "password": "TestPass123"
+}
+```
+
+🔑 Response includes `token` — use this for authenticated requests.
+
+---
+
+### 📋 Task API
+
+#### 1. Create Task
+```http
+POST /api/tasks/
+Authorization: Token your_token_here
+
+{
+  "title": "Finish ALX Project",
+  "description": "Complete backend and frontend integration",
+  "completed": false
+}
+```
+
+#### 2. List Tasks
+```http
+GET /api/tasks/
+Authorization: Token your_token_here
+```
+
+#### 3. Get Task by ID
+```http
+GET /api/tasks/1/
+Authorization: Token your_token_here
+```
+
+#### 4. Update Task (Full Replace)
+```http
+PUT /api/tasks/1/
+Authorization: Token your_token_here
+
+{
+  "title": "Updated Task Title",
+  "description": "Updated description here",
+  "completed": true
+}
+```
+
+#### 5. Update Task (Partial)
+```http
+PATCH /api/tasks/1/
+Authorization: Token your_token_here
+Content-Type: application/json
+
+{
+  "completed": true
+}
+```
+
+#### 6. Delete Task
+```http
+DELETE /api/tasks/1/
+Authorization: Token your_token_here
+```
+
+---
 ---
 
 ## 🚀 Frontend (Coming Soon)
@@ -99,10 +166,7 @@ The frontend will be built with **React + TailwindCSS** and will include:
 
 ## 🛠️ Tech Stack
 
-* **Backend:** Django, Django REST Framework
-* **Database:** SQLite (development), PostgreSQL (production ready)
-* **Auth:** DRF Token Authentication
+* **Backend:** Django, Django REST Framework  
+* **Database:** SQLite (development), PostgreSQL (production ready)  
+* **Auth:** DRF Token Authentication  
 * **Frontend:** React + TailwindCSS (in progress)
-
-```
-
