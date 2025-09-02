@@ -29,8 +29,6 @@ A **React + TailwindCSS frontend** will connect to these APIs (currently under d
 |--------|---------------------------|----------------------------------|---------------|
 | POST   | `/api/users/register/`    | Register a new user              | ❌ |
 | POST   | `/api/users/login/`       | Login & get **token + user data**| ❌ |
-| GET    | `/api/users/`             | List all users                   | ✅ |
-
 ---
 
 ## 📋 Tasks App Features
