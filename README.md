@@ -179,11 +179,6 @@ Content-Type: application/json
 ```json
 {
   "token": "abcdef123456",
-  "user": {
-    "id": 1,
-    "username": "john",
-    "email": "john@example.com"
-  }
 }
 ```
 
